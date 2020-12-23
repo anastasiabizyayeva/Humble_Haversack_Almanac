@@ -16,8 +16,8 @@ print(df.columns)
 
 df_clean= df.drop(['Sale Date_y','Date Posted_y','Delivery City_y','Delivery State_y','Delivery Zipcode_y','Delivery Country_y','Currency_y','Coupon Code_y','Coupon Details_y','Discount Amount_y','Delivery Discount_y','Buyer_x','Order Type_y', 'Payment Type_y', 'Currency_x','Delivery Address1','Delivery Address2','Delivery Zipcode_x','Order Type_x','Listings Type','Payment Type_x','InPerson Discount','InPerson Location', 'VAT Paid by Buyer','SKU', 'Full Name','Last Name','Payment Method','Status','Adjusted Order Total','Adjusted Card Processing Fees','Adjusted Net Order Amount', 'Street 1', 'Street 2'], axis=1)
 
-print(df_clean.columns)
-
+print(df_clean['Item Name'].unique())
+print(df_clean['Item Name'].isna().sum())
 
 df_clean.rename(columns={'Sale Date_x':'Sale Date', 'Buyer_y':'Buyer','Coupon Code_x': 'Coupon Code', 'Coupon Details_x': 'Coupon Details', 'Discount Amount_x': 'Discount Amount', 'Delivery Discount_x': 'Delivery Discount', 'Date Posted_x': 'Date Posted', 'Delivery City_x': 'Delivery City', 'Delivery State_x': 'Delivery State', 'Delivery Country_x': 'Delivery Country'}, inplace=True)
 
@@ -31,6 +31,7 @@ clean_descriptions = {
     'Shiba Inu Postcard / Dog Postcard / Puppy Postcard / Shiba Inu Card / Shiba Postcard / Puppy Card / Shiba Print / Dog Print / A6': 'Shiba Inu Postcard',
     'DnD Birthday Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Age Modifier / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Age Modifier Card',
     'DnD Birthday Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Natural 20 Card',
+    'DnD Birthday Card/ DnD Valentines Card / RPG Birthday Card / Tabletop RPG Gaming / For Him, For Her, Boyfriend, Girlfriend, A6': 'Natural 20 Card',
     'DnD Christmas Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Christmas Card / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Christmas Card',
     'DnD Christmas Card Bundle! / D&D Card / D20 / Natural 20 / Tabletop RPG Gaming / DnD Greeting Card / Dungeons and Dragons Christmas Card A6': 'Christmas Card Bundle', 
     'DnD Birthday Card/ DnD Greeting Card / RPG Birthday Card / Tabletop RPG Gaming / For Him, For Her, Boyfriend, Girlfriend, A6': 'Mimic Card', 
@@ -38,10 +39,22 @@ clean_descriptions = {
     'DnD Birthday Card/ D&D Card / Nerdy Love / Lich / Tabletop RPG Gaming / DnD Anniversary / A6': 'Lich Card', 
     'DnD Anniversary Card/ D&D Card / DnD Love / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming / A6': 'Necromancer Card',
     'Shiba Inu Birthday Card/ Dog Card / Puppy Card / Shiba Inu / Puppy / Puppy Birthday Card / Shiba Inu Birthday Card / Dog / Dog Birthday / A6': 'Shiba Birthday Card',
+    'DnD Anniversary Card/ D&D Card / DnD Love / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming / A6': 'Necromancer Card',
     'Shiba Inu Get Well Soon Card/ Dog Card / Puppy Card / Shiba Inu / Puppy / Puppy Greeting Card / Shiba Inu Greeting Card / A6': 'Shiba Get Well Soon Card',
     'DnD Fathers Day Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Best Dad Ever / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Fathers Day Card',
     'DnD Birthday Card / RPG Birthday Card / Tabletop RPG Gaming / D&D Birthday Card / Funny DnD / For Him, For Her, Boyfriend, Girlfriend, A6': 'Mithril Diapers Card',
-    'DnD Anniversary Card / D&D Card / Fantasy Card / Wizard Card / Nerdy Love / Cute Wizard / Tabletop RPG Gaming / A6': 'Wand Card'
+    'DnD Anniversary Card / D&D Card / Fantasy Card / Wizard Card / Nerdy Love / Cute Wizard / Tabletop RPG Gaming / A6': 'Wand Card',
+    'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / Cute Wizard / Want in Your Pocket / Tabletop RPG Gaming': 'Wand Card',
+    'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / D20 / Natural 20 / Tabletop RPG Gaming': 'Natural 20 Card',
+    'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / Gelatinous Cube / Engulf / Hugs / Tabletop RPG Gaming': 'Gelatinous Cube Card',
+    'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / Lich - Our Love Never Dies! / Tabletop RPG Gaming': 'Lich Card',
+    'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming': 'Necromancer Card'
     }
 
 df_clean['Item Name'] = df_clean['Item Name'].map(clean_descriptions)
+
+print(df_clean['Item Name'].unique())
+
+print(df_clean['Item Name'].isna().sum())
+
+print('DnD Valentine\'s Day Card/ D&D Card / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming')
