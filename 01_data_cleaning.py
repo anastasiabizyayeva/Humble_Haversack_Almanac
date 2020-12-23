@@ -24,7 +24,24 @@ df_clean.rename(columns={'Sale Date_x':'Sale Date', 'Buyer_y':'Buyer','Coupon Co
 df_clean['Buyer'] = df_clean['Buyer'].str.lower()
 df_clean['Buyer_First_Name'] = df_clean['Buyer'].str.split(' ').str[0]
 
-print(df_clean['Buyer'].head())
-print(df_clean['Buyer_First_Name'].head())
+clean_descriptions = {
+    'DnD Stickers / D20 Stickers / Emoji Stickers / Cute RPG, Fantasy Stickers / Red D20 Stickers / Matte Stickers': 'Red Sticker',
+    'DnD Stickers / D20 Stickers / Emoji Stickers / Cute RPG, Fantasy Stickers / Rainbow D20 Stickers / Matte Stickers': 'Rainbow Sticker',
+    'DnD Postcard / D&D Postcard / DnD Card / D20 Postcard / D20 Card / Dreamy Dice / Dice Card / DnD Print / Dice Print / Fantasy Art Print': 'Dice Postcard',
+    'Shiba Inu Postcard / Dog Postcard / Puppy Postcard / Shiba Inu Card / Shiba Postcard / Puppy Card / Shiba Print / Dog Print / A6': 'Shiba Inu Postcard',
+    'DnD Birthday Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Age Modifier / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Age Modifier Card',
+    'DnD Birthday Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Natural 20 Card',
+    'DnD Christmas Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Christmas Card / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Christmas Card',
+    'DnD Christmas Card Bundle! / D&D Card / D20 / Natural 20 / Tabletop RPG Gaming / DnD Greeting Card / Dungeons and Dragons Christmas Card A6': 'Christmas Card Bundle', 
+    'DnD Birthday Card/ DnD Greeting Card / RPG Birthday Card / Tabletop RPG Gaming / For Him, For Her, Boyfriend, Girlfriend, A6': 'Mimic Card', 
+    'DnD Greeting Card/ D&D Card / DnD Birthday Card / Nerdy Love / Gelatinous Cube / Engulf / Hugs / Tabletop RPG Gaming / For Him, For Her / A6': 'Gelatinous Cube Card', 
+    'DnD Birthday Card/ D&D Card / Nerdy Love / Lich / Tabletop RPG Gaming / DnD Anniversary / A6': 'Lich Card', 
+    'DnD Anniversary Card/ D&D Card / DnD Love / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming / A6': 'Necromancer Card',
+    'Shiba Inu Birthday Card/ Dog Card / Puppy Card / Shiba Inu / Puppy / Puppy Birthday Card / Shiba Inu Birthday Card / Dog / Dog Birthday / A6': 'Shiba Birthday Card',
+    'Shiba Inu Get Well Soon Card/ Dog Card / Puppy Card / Shiba Inu / Puppy / Puppy Greeting Card / Shiba Inu Greeting Card / A6': 'Shiba Get Well Soon Card',
+    'DnD Fathers Day Card/ D&D Card / Dungeon Master Card / D20 / Natural 20 / Best Dad Ever / Tabletop RPG Gaming / DnD Greeting Card / A6': 'Fathers Day Card',
+    'DnD Birthday Card / RPG Birthday Card / Tabletop RPG Gaming / D&D Birthday Card / Funny DnD / For Him, For Her, Boyfriend, Girlfriend, A6': 'Mithril Diapers Card',
+    'DnD Anniversary Card / D&D Card / Fantasy Card / Wizard Card / Nerdy Love / Cute Wizard / Tabletop RPG Gaming / A6': 'Wand Card'
+    }
 
-print(df_clean.columns)
+df_clean['Item Name'] = df_clean['Item Name'].map(clean_descriptions)
