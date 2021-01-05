@@ -20,7 +20,7 @@ print(df_clean['Item Name'].isna().sum())
 df_clean.rename(columns={'Sale Date_x':'Sale Date', 'Buyer_y':'Buyer','Coupon Code_x': 'Coupon Code', 'Coupon Details_x': 'Coupon Details', 'Discount Amount_x': 'Discount Amount', 'Delivery Discount_x': 'Delivery Discount', 'Date Posted_x': 'Date Posted', 'Delivery City_x': 'Delivery City', 'Delivery State_x': 'Delivery State', 'Delivery Country_x': 'Delivery Country'}, inplace=True)
 
 df_clean['Buyer'] = df_clean['Buyer'].str.lower()
-df_clean['Buyer_First_Name'] = df_clean['Buyer'].str.split(' ').str[0]
+df_clean['Buyer First Name'] = df_clean['Buyer'].str.split(' ').str[0]
 
 clean_descriptions = {
     'DnD Stickers / D20 Stickers / Emoji Stickers / Cute RPG, Fantasy Stickers / Red D20 Stickers / Matte Stickers': 'Red Sticker',
@@ -51,11 +51,9 @@ clean_descriptions = {
 
 df_clean['Item Name'] = df_clean['Item Name'].map(clean_descriptions)
 
-print(df_clean[['Buyer User ID','Full Name', 'First Name', 'Buyer', 'Buyer_First_Name']].head())
-
 df_clean['Buyer User ID'] = df_clean['Buyer User ID'].replace(np.nan, 0)
 df_clean['Has Account'] = df_clean['Buyer User ID'].apply(lambda x: x if x == 0 else 1)
 
-print(df_clean['Buyer User ID'].head(20))
-print(df_clean['Has Account'].head(20))
-#df_cleaner = df_clean.drop(['Buyer'], axis=1)
+df_cleaner = df_clean.drop(['Buyer User ID', 'Full Name', 'First Name', 'Buyer'], axis=1)
+
+df_cleaner.to_csv('eda_data.csv')
