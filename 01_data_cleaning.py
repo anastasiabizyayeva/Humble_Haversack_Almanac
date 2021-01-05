@@ -12,9 +12,7 @@ df_two = pd.read_csv('original_csvs/EtsySoldOrders2020.csv')
 
 df = pd.merge(df_one, df_two, how='outer', on='Order ID', left_index=True, right_index=False)
 
-print(df.columns)
-
-df_clean= df.drop(['Sale Date_y','Date Posted_y','Delivery City_y','Delivery State_y','Delivery Zipcode_y','Delivery Country_y','Currency_y','Coupon Code_y','Coupon Details_y','Discount Amount_y','Delivery Discount_y','Buyer_x','Order Type_y', 'Payment Type_y', 'Currency_x','Delivery Address1','Delivery Address2','Delivery Zipcode_x','Order Type_x','Listings Type','Payment Type_x','InPerson Discount','InPerson Location', 'VAT Paid by Buyer','SKU', 'Full Name','Last Name','Payment Method','Status','Adjusted Order Total','Adjusted Card Processing Fees','Adjusted Net Order Amount', 'Street 1', 'Street 2'], axis=1)
+df_clean= df.drop(['Sale Date_y','Date Posted_y','Delivery City_y','Delivery State_y','Delivery Zipcode_y','Delivery Country_y','Currency_y','Coupon Code_y','Coupon Details_y','Discount Amount_y','Delivery Discount_y','Buyer_x','Order Type_y', 'Payment Type_y', 'Currency_x','Delivery Address1','Delivery Address2','Delivery Zipcode_x','Order Type_x','Listings Type','Payment Type_x','InPerson Discount','InPerson Location', 'VAT Paid by Buyer','SKU','Last Name','Payment Method','Status','Adjusted Order Total','Adjusted Card Processing Fees','Adjusted Net Order Amount', 'Street 1', 'Street 2'], axis=1)
 
 print(df_clean['Item Name'].unique())
 print(df_clean['Item Name'].isna().sum())
@@ -53,8 +51,11 @@ clean_descriptions = {
 
 df_clean['Item Name'] = df_clean['Item Name'].map(clean_descriptions)
 
-print(df_clean['Item Name'].unique())
+print(df_clean[['Buyer User ID','Full Name', 'First Name', 'Buyer', 'Buyer_First_Name']].head())
 
-print(df_clean['Item Name'].isna().sum())
+df_clean['Buyer User ID'] = df_clean['Buyer User ID'].replace(np.nan, 0)
+df_clean['Has Account'] = df_clean['Buyer User ID'].apply(lambda x: x if x == 0 else 1)
 
-print('DnD Valentine\'s Day Card/ D&D Card / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming')
+print(df_clean['Buyer User ID'].head(20))
+print(df_clean['Has Account'].head(20))
+#df_cleaner = df_clean.drop(['Buyer'], axis=1)
