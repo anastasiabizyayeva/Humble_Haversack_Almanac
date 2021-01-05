@@ -14,9 +14,6 @@ df = pd.merge(df_one, df_two, how='outer', on='Order ID', left_index=True, right
 
 df_clean= df.drop(['Sale Date_y','Date Posted_y','Delivery City_y','Delivery State_y','Delivery Zipcode_y','Delivery Country_y','Currency_y','Coupon Code_y','Coupon Details_y','Discount Amount_y','Delivery Discount_y','Buyer_x','Order Type_y', 'Payment Type_y', 'Currency_x','Delivery Address1','Delivery Address2','Delivery Zipcode_x','Order Type_x','Listings Type','Payment Type_x','InPerson Discount','InPerson Location', 'VAT Paid by Buyer','SKU','Last Name','Payment Method','Status','Adjusted Order Total','Adjusted Card Processing Fees','Adjusted Net Order Amount', 'Street 1', 'Street 2'], axis=1)
 
-print(df_clean['Item Name'].unique())
-print(df_clean['Item Name'].isna().sum())
-
 df_clean.rename(columns={'Sale Date_x':'Sale Date', 'Buyer_y':'Buyer','Coupon Code_x': 'Coupon Code', 'Coupon Details_x': 'Coupon Details', 'Discount Amount_x': 'Discount Amount', 'Delivery Discount_x': 'Delivery Discount', 'Date Posted_x': 'Date Posted', 'Delivery City_x': 'Delivery City', 'Delivery State_x': 'Delivery State', 'Delivery Country_x': 'Delivery Country'}, inplace=True)
 
 df_clean['Buyer'] = df_clean['Buyer'].str.lower()
