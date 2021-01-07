@@ -4,20 +4,35 @@ Created on Mon Dec 21 16:33:56 2020
 
 @author: Anastasia
 """
+
+#Import packages 
+
 import pandas as pd
 import numpy as np 
+
+#Read in two CSVs downloaded from Etsy shop manager
 
 df_one = pd.read_csv('original_csvs/EtsySoldOrderItems2020.csv')
 df_two = pd.read_csv('original_csvs/EtsySoldOrders2020.csv')
 
+#Merge the transaction and item CSVs
+
 df = pd.merge(df_one, df_two, how='outer', on='Order ID', left_index=True, right_index=False)
+
+#Drop the columns that are repeated across the CSVs
 
 df_clean= df.drop(['Sale Date_y','Date Posted_y','Delivery City_y','Delivery State_y','Delivery Zipcode_y','Delivery Country_y','Currency_y','Coupon Code_y','Coupon Details_y','Discount Amount_y','Delivery Discount_y','Buyer_x','Order Type_y', 'Payment Type_y', 'Currency_x','Delivery Address1','Delivery Address2','Delivery Zipcode_x','Order Type_x','Listings Type','Payment Type_x','InPerson Discount','InPerson Location', 'VAT Paid by Buyer','SKU','Last Name','Payment Method','Status','Adjusted Order Total','Adjusted Card Processing Fees','Adjusted Net Order Amount', 'Street 1', 'Street 2'], axis=1)
 
+#Rename the remaining columns 
+
 df_clean.rename(columns={'Sale Date_x':'Sale Date', 'Buyer_y':'Buyer','Coupon Code_x': 'Coupon Code', 'Coupon Details_x': 'Coupon Details', 'Discount Amount_x': 'Discount Amount', 'Delivery Discount_x': 'Delivery Discount', 'Date Posted_x': 'Date Posted', 'Delivery City_x': 'Delivery City', 'Delivery State_x': 'Delivery State', 'Delivery Country_x': 'Delivery Country'}, inplace=True)
+
+#Keep only the first names of the buyers so they're anonymized and make sure all names are lowercase for future grouping 
 
 df_clean['Buyer'] = df_clean['Buyer'].str.lower()
 df_clean['Buyer First Name'] = df_clean['Buyer'].str.split(' ').str[0]
+
+#Create a dict of more succinct product names
 
 clean_descriptions = {
     'DnD Stickers / D20 Stickers / Emoji Stickers / Cute RPG, Fantasy Stickers / Red D20 Stickers / Matte Stickers': 'Red Sticker',
@@ -46,11 +61,19 @@ clean_descriptions = {
     'DnD Valentine’s Day Card/ D&D Card / Nerdy Love / You Put the Romance in Necromancer / Tabletop RPG Gaming': 'Necromancer Card'
     }
 
+#Map succinct product names to the 'item name' column
+
 df_clean['Item Name'] = df_clean['Item Name'].map(clean_descriptions)
+
+#Map user IDs to a new column which checks whether or not a buyer has an Etsy account
 
 df_clean['Buyer User ID'] = df_clean['Buyer User ID'].replace(np.nan, 0)
 df_clean['Has Account'] = df_clean['Buyer User ID'].apply(lambda x: x if x == 0 else 1)
 
+#Drop remaining useless columns 
+
 df_cleaner = df_clean.drop(['Buyer User ID', 'Full Name', 'First Name', 'Buyer'], axis=1)
+
+#Write out to a cleaned CSV for EDA
 
 df_cleaner.to_csv('eda_data.csv')
